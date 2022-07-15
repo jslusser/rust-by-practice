@@ -265,10 +265,119 @@ fn main() {
     println!("Success!");
  }
 //4.4.3
-//TBD
+//4.4.3.1
+fn main() {
+    let v = {
+        let mut x = 1;
+        x += 2
+    };
+ 
+    assert_eq!(v, ());
+ }
+ //and
+ fn main() {
+    let v = {
+        let mut x = 1;
+        x += 2;
+        x
+    };
+
+    assert_eq!(v, 3);
+}
+//4.4.3.2
+fn main() {
+    let v = {
+        let x = 3;
+        x
+    };
+ 
+    assert!(v == 3);
+}
+//4.4.3.3
+fn main() {
+    let s = sum(1 , 2);
+    assert_eq!(s, 3);
+}
+
+fn sum(x: i32, y: i32) -> i32 {
+    x + y
+}
 //4.4.4
 //4.4.4.1
 
+fn main() {
+    // don't modify the following two lines!
+    let (x, y) = (1, 2);
+    let s = sum(x, y);
+
+    assert_eq!(s, 3);
+}
+
+fn sum(x: i32, y: i32) -> i32 {
+    x + y
+}
+//4.4.4.2
+fn main() {
+    print();
+}
+
+// replace i32 with another type
+fn print() -> () {
+    println!("hello,world");
+}
+//4.4.4.3
+fn main() {
+    never_return();
+}
+
+fn never_return() -> ! {
+    // implement this function, don't modify fn signatures
+    panic!("I return nothing!")
+}
+//and
+fn main() {
+    never_return();
+}
+
+use std::thread;
+use std::time;
+
+fn never_return() -> ! {
+    // implement this function, don't modify fn signatures
+    loop {
+        println!("I return nothing");
+        // sleeping for 1 second to avoid exhausting the cpu resoucre
+        thread::sleep(time::Duration::from_secs(1))
+    }
+}
+//4.4.4.3
+fn main() {
+    never_return();
+}
+
+fn never_return() -> ! {
+    // implement this function, don't modify fn signatures
+    panic!("I return nothing!")
+}
+```
+
+```rust
+fn main() {
+    never_return();
+}
+
+use std::thread;
+use std::time;
+
+fn never_return() -> ! {
+    // implement this function, don't modify fn signatures
+    loop {
+        println!("I return nothing");
+        // sleeping for 1 second to avoid exhausting the cpu resoucre
+        thread::sleep(time::Duration::from_secs(1))
+    }
+}
+//4.4.4.4
 fn main() {
     println!("Success!");
 }
@@ -282,28 +391,38 @@ fn get_option(tp: u8) -> Option<i32> {
             // TODO
         }
     };
-    
-    // Rather than returning a None, we use a diverging function instead
+
     never_return_fn()
 }
 
+// IMPLEMENT this function
+// DON'T change any code else
+fn never_return_fn() -> ! {
+    unimplemented!()
+}
+//and
 // IMPLEMENT this function in THREE ways
 fn never_return_fn() -> ! {
-     panic!()
+    panic!()
 }
-//4.4.4.2
-//4.4.4.3
-//4.4.5
+//and
+// IMPLEMENT this function in THREE ways
+fn never_return_fn() -> ! {
+    loop {
+        std::thread::sleep(std::time::Duration::from_secs(1))
+    }
+}
+//4.4.4.5
 fn main() {
     // FILL in the blank
     let b = false;
 
-    let _v = match b {
+    let v = match b {
         true => 1,
-        // Diverging functions can also be used in match expression to replace a value of any value
+        // Diverging functions can also be used in match expression
         false => {
             println!("Success!");
-            panic!("we have no value for `false`, but we can panic");
+            panic!("we have no value for `false`, but we can panic")
         }
     };
 
